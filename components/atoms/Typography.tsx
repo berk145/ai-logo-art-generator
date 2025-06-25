@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
     lineHeight: 22,
     fontWeight: "800",
-    //letterSpacing: -1,
     color: Colors.white,
   },
   h4: {
@@ -50,7 +49,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 21,
     fontWeight: "800",
-    //letterSpacing: -1,
     color: Colors.white,
   },
   subtitle1: {
@@ -58,7 +56,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 20,
     fontWeight: "700",
-    //letterSpacing: -1,
     color: Colors.white,
   },
   body1: {
@@ -66,7 +63,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 21,
     fontWeight: "400",
-    //letterSpacing: -1,
   },
   body2: {
     fontFamily: "Manrope-Regular",
