@@ -72,7 +72,8 @@ const styles = StyleSheet.create({
     fontFamily: "Manrope-Regular",
     fontSize: 16,
     lineHeight: 21,
-    verticalAlign: "middle",
+
+    height: "100%",
   },
   containerFocused: {
     borderColor: Colors.white,
