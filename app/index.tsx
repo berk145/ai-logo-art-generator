@@ -6,20 +6,48 @@ import { Nofication } from "@/components/atoms/Nofication";
 import { Typography } from "@/components/atoms/Typography";
 import { LogoStyleSelector } from "@/components/molecules/LogoStyleSelector";
 import { ScreenTemplate } from "@/components/templates/ScreenTemplate";
-import { router } from "expo-router";
-import { useState } from "react";
+import { useRandomPrompt } from "@/hooks/useRandomPrompt";
+import { useAppStore } from "@/store/useAppStore";
+import { getRandomDuration, shouldFail } from "@/utils/generic";
+import { useEffect, useState } from "react";
 import { Image, StyleSheet, View } from "react-native";
 
 export default function Home() {
-  const navigateToOutput = () => {
-    router.push("/Output");
-  };
-
-  const handleCreate = () => {
-    navigateToOutput();
-  };
+  const { fetchRandomPrompt, prompt } = useRandomPrompt();
+  const { setLogoStyle, setStatus, setPrompt } = useAppStore();
 
   const [text, setText] = useState("");
+  const [selectedStyle, setSelectedStyle] = useState<null | LogoStyle>(null);
+  const [currentStatus, setCurrentStatus] = useState<NotificationState>("idle");
+
+  useEffect(() => {
+    if (prompt && prompt !== text) {
+      setText(prompt);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prompt]);
+
+  const handleCreate = async () => {
+    const waitTime = getRandomDuration();
+    setCurrentStatus("loading");
+
+    await new Promise((resolve) => setTimeout(resolve, waitTime));
+    if (shouldFail()) {
+      setCurrentStatus("error");
+    } else {
+      setCurrentStatus("success");
+      setStatus("success");
+      selectedStyle && setLogoStyle(selectedStyle);
+      setPrompt(text);
+    }
+  };
+
+  const getPrompt = () => {
+    fetchRandomPrompt();
+  };
+
+  const disableCreateButton =
+    selectedStyle === null || text.length === 0 ? true : false;
 
   return (
     <ScreenTemplate>
@@ -28,7 +56,10 @@ export default function Home() {
           <Typography text="AI Logo" variant="h3" />
         </View>
         <View style={styles.content}>
-          <Nofication state="loading" />
+          {currentStatus !== "idle" && (
+            <Nofication state={currentStatus} reset={handleCreate} />
+          )}
+
           <View
             style={{
               flexDirection: "row",
@@ -37,7 +68,7 @@ export default function Home() {
             }}
           >
             <Typography text="Enter Your Prompt" variant="h2" />
-            <SurpriseMeButton onPress={() => {}} />
+            <SurpriseMeButton onPress={getPrompt} />
           </View>
           <View style={styles.inputContainer}>
             <Input
@@ -46,10 +77,17 @@ export default function Home() {
               onChangeText={setText}
             />
           </View>
-          <LogoStyleSelector />
+          <LogoStyleSelector onSelect={(style) => setSelectedStyle(style)} />
         </View>
       </View>
-      <Button style={styles.createButton} handlePress={handleCreate}>
+      <Button
+        style={[
+          styles.createButton,
+          { opacity: disableCreateButton ? 0.3 : 1 },
+        ]}
+        handlePress={handleCreate}
+        disabled={disableCreateButton}
+      >
         <View style={styles.buttonContentContainer}>
           <Typography text={"Create"} variant="h3" />
           <Image source={Stars} style={styles.buttonImage} />

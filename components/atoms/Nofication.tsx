@@ -1,6 +1,8 @@
 import ErrorIcon from "@/assets/images/alert-circle.png";
+import LogoOutput from "@/assets/images/logo-output.jpg";
 import { Colors } from "@/constants/theme";
 import { LinearGradient } from "expo-linear-gradient";
+import { router } from "expo-router";
 import React, { PropsWithChildren } from "react";
 import {
   ActivityIndicator,
@@ -13,6 +15,7 @@ import { Typography } from "./Typography";
 
 interface IProps {
   state: NotificationState;
+  reset: VoidFunction;
 }
 
 const stateConfig = {
@@ -39,27 +42,22 @@ const stateConfig = {
   },
 };
 
-export const Nofication = ({ state }: IProps) => {
+export const Nofication = ({ state, reset }: IProps) => {
   const IconSection = () => {
     switch (state) {
       case "loading":
-        return (
-          <ActivityIndicator // TODO FIND GIF
-            size="large"
-            color="white"
-            /* style={styles.loadingIcon} */
-          />
-        );
+        return <ActivityIndicator size="large" color="white" />;
       case "success":
-        return; //todo image
-      // <View style={styles.errorIconContainer}>
-      //     <Image
-      //       source={ErrorIcon}
-      //       resizeMethod="resize"
-      //       resizeMode="contain"
-      //       style={styles.errorIcon}
-      //     />
-      //   </View>
+        return (
+          <View style={styles.errorIconContainer}>
+            <Image
+              source={LogoOutput}
+              resizeMethod="auto"
+              resizeMode="cover"
+              style={styles.outputLogo}
+            />
+          </View>
+        );
       case "error":
         return (
           <View style={styles.errorIconContainer}>
@@ -164,7 +162,13 @@ export const Nofication = ({ state }: IProps) => {
           backgroundColor: state === "error" ? Colors.white : "#18181B",
         }}
         activeOpacity={0.7}
-        onPress={() => {}}
+        onPress={() => {
+          if (state === "success") {
+            router.navigate("/Output");
+          } else {
+            reset();
+          }
+        }}
       >
         {children}
       </TouchableOpacity>
@@ -218,4 +222,5 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
   },
+  outputLogo: { maxHeight: "100%", maxWidth: "100%" },
 });

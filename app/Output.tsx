@@ -7,16 +7,16 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import CopyIcon from "@/assets/images/copy.png";
 import Logo from "@/assets/images/logo-output.jpg";
 import { Colors } from "@/constants/theme";
+import { useAppStore } from "@/store/useAppStore";
 import * as Clipboard from "expo-clipboard";
 import { router } from "expo-router";
 import Toast from "react-native-toast-message";
 
 export default function Output() {
-  const promptText =
-    "A professional logo for Harrison & Co. Law Firm, using balanced serif fonts";
+  const { prompt, logoStyle, reset } = useAppStore();
 
   const handleCopyPress = () => {
-    Clipboard.setStringAsync(promptText);
+    prompt && Clipboard.setStringAsync(prompt);
     Toast.show({
       type: "success",
       text1: "Text coppied to clipboard",
@@ -30,7 +30,10 @@ export default function Output() {
         <View style={styles.titleSection}>
           <Typography text="Your Design" variant="h1" />
           <TouchableOpacity
-            onPress={router.back}
+            onPress={() => {
+              reset();
+              router.replace("/");
+            }}
             activeOpacity={0.7}
             style={styles.button}
           >
@@ -62,14 +65,12 @@ export default function Output() {
               </TouchableOpacity>
             </View>
             <Typography
-              text={
-                "A professional logo for Harrison & Co. Law Firm, using balanced serif fonts"
-              }
+              text={prompt ? prompt : ""}
               variant="body1"
               style={{ color: Colors.white }}
             />
             <View style={styles.tag}>
-              <Text style={styles.tagText}>{"Monogram"}</Text>
+              <Text style={styles.tagText}>{logoStyle?.name}</Text>
             </View>
           </View>
         </View>

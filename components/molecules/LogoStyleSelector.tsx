@@ -1,41 +1,65 @@
 import { Colors } from "@/constants/theme";
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import {
+  ActivityIndicator,
   FlatList,
   Image,
-  ImageSourcePropType,
   StyleSheet,
   View,
 } from "react-native";
 import { Typography } from "../atoms/Typography";
 
-import Abstract from "@/assets/images/abstract.png";
-import Mascot from "@/assets/images/mascot.png";
-import Monogram from "@/assets/images/monogram.png";
+import { useLogoStyles } from "@/hooks/useLogoStyles";
 import { LogoStyleItem } from "../atoms/LogoStyleItem";
 
-export const LogoStyleSelector = () => {
-  const [selectedItem, setSelectedItem] = useState<string | null>(null);
+interface IProps {
+  onSelect: (style: LogoStyle) => void;
+}
 
-  const renderItem = ({ item }: { item: StyleData }) => {
+const LogoStyleSelectorComponent = ({ onSelect }: IProps) => {
+  const [selectedItem, setSelectedItem] = useState<string | null>(null);
+  const { loading, logoStylesData } = useLogoStyles();
+
+  const renderItem = ({ item }: { item: LogoStyle }) => {
+    const image =
+      item.image !== "no-style" ? (
+        <Image
+          source={{ uri: item.image }}
+          resizeMethod="auto"
+          resizeMode="cover"
+          style={{ width: "100%", height: "100%" }}
+        />
+      ) : undefined;
     return (
       <LogoStyleItem
         id={item.id}
         isSelected={selectedItem === item.id}
         name={item.name}
-        image={item.image}
+        image={image}
         onPress={(id: string) => {
           setSelectedItem(id);
+          onSelect(item);
         }}
       />
     );
   };
 
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <Typography text="Logo Styles" variant="h2" style={styles.title} />
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="white" />
+        </View>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <Typography text="Logo Styles" variant="h2" style={styles.title} />
       <FlatList
-        data={mock}
+        data={logoStylesData}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         horizontal
@@ -52,40 +76,13 @@ const styles = StyleSheet.create({
     color: Colors.white,
     marginBottom: 12,
   },
+  loadingContainer: {
+    width: "100%",
+    height: 90,
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
 
-const MockImage = (image: ImageSourcePropType) => (
-  <Image
-    source={image}
-    resizeMethod="auto"
-    resizeMode="cover"
-    style={{ width: "100%", height: "100%" }}
-  />
-);
-const mock: StyleData[] = [
-  {
-    id: "no-style",
-    name: "No Style",
-  },
-  {
-    id: "monogram",
-    name: "Monogram",
-    image: MockImage(Monogram),
-  },
-  {
-    id: "abstract",
-    name: "Abstract",
-    image: MockImage(Abstract),
-  },
-  {
-    id: "mascot",
-    name: "Mascot",
-    image: MockImage(Mascot),
-  },
-];
-
-interface StyleData {
-  id: string;
-  name: string;
-  image?: React.JSX.Element;
-}
+export const LogoStyleSelector = memo(LogoStyleSelectorComponent);
+LogoStyleSelector.displayName = "LogoStyleSelector";
