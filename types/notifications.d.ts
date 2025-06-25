@@ -1,1 +1,1 @@
-type NotificationState = "loading" | "success" | "error";
+type NotificationState = "idle" | "loading" | "success" | "error";

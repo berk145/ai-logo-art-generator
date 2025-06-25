@@ -3,10 +3,10 @@ import { create } from "zustand";
 type AppStore = {
   status: NotificationState | null;
   prompt: string | null;
-  logoStyle: string | null;
+  logoStyle: LogoStyle | null;
   setStatus: (status: NotificationState) => void;
   setPrompt: (prompt: string) => void;
-  setLogoStyle: (style: string) => void;
+  setLogoStyle: (style: LogoStyle) => void;
   reset: () => void;
 };
 
