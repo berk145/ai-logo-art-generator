@@ -50,8 +50,26 @@ export default function Home() {
   const disableCreateButton =
     selectedStyle === null || text.length === 0 ? true : false;
 
+  const ButtonSection = () => (
+    <Button
+      style={[
+        styles.createButton,
+        {
+          opacity: disableCreateButton ? 0.3 : 1,
+        },
+      ]}
+      handlePress={handleCreate}
+      disabled={disableCreateButton}
+    >
+      <View style={styles.buttonContentContainer}>
+        <Typography text={"Create"} variant="h3" />
+        <Image source={Stars} style={styles.buttonImage} />
+      </View>
+    </Button>
+  );
+
   return (
-    <ScreenTemplate>
+    <ScreenTemplate outsideOfKeyboardAvoidChildren={<ButtonSection />}>
       <View style={styles.container}>
         <View style={styles.header}>
           <Typography text="AI Logo" variant="h3" />
@@ -86,21 +104,6 @@ export default function Home() {
           <LogoStyleSelector onSelect={(style) => setSelectedStyle(style)} />
         </View>
       </View>
-      <Button
-        style={[
-          styles.createButton,
-          {
-            opacity: disableCreateButton ? 0.3 : 1,
-          },
-        ]}
-        handlePress={handleCreate}
-        disabled={disableCreateButton}
-      >
-        <View style={styles.buttonContentContainer}>
-          <Typography text={"Create"} variant="h3" />
-          <Image source={Stars} style={styles.buttonImage} />
-        </View>
-      </Button>
     </ScreenTemplate>
   );
 }

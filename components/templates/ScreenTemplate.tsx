@@ -9,8 +9,14 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+interface IProps {
+  outsideOfKeyboardAvoidChildren?: React.JSX.Element;
+}
 
-export const ScreenTemplate: React.FC<PropsWithChildren> = ({ children }) => {
+export const ScreenTemplate: React.FC<PropsWithChildren<IProps>> = ({
+  children,
+  outsideOfKeyboardAvoidChildren,
+}) => {
   return (
     <ImageBackground
       source={require("../../assets/images/back-gradient.png")}
@@ -30,6 +36,7 @@ export const ScreenTemplate: React.FC<PropsWithChildren> = ({ children }) => {
             <View style={styles.container}>{children}</View>
           </ScrollView>
         </KeyboardAvoidingView>
+        {outsideOfKeyboardAvoidChildren}
       </SafeAreaView>
     </ImageBackground>
   );
