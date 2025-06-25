@@ -49,7 +49,7 @@ export const Nofication = ({ state, reset }: IProps) => {
         return <ActivityIndicator size="large" color="white" />;
       case "success":
         return (
-          <View style={styles.errorIconContainer}>
+          <View style={styles.imageIconContainer}>
             <Image
               source={LogoOutput}
               resizeMethod="auto"
@@ -217,6 +217,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#EF4444B2",
+  },
+  imageIconContainer: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   errorIcon: {
     width: 32,

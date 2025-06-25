@@ -43,7 +43,6 @@ const styles = StyleSheet.create({
     maxWidth: "100%",
     height: 56,
     borderRadius: 50,
-    backgroundColor: "red",
     overflow: "hidden",
   },
   gradientBackground: {

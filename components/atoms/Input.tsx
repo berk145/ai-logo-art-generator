@@ -1,6 +1,13 @@
 import { Colors } from "@/constants/theme";
 import React, { useState } from "react";
-import { StyleSheet, TextInput, TextInputProps, View } from "react-native";
+import {
+  StyleProp,
+  StyleSheet,
+  TextInput,
+  TextInputProps,
+  TextStyle,
+  View,
+} from "react-native";
 import { Typography } from "./Typography";
 
 type IProps = TextInputProps & {
@@ -10,6 +17,7 @@ type IProps = TextInputProps & {
   value: string;
   onChangeText: (text: string) => void;
   placeholder?: string; // Optional placeholder
+  InputStyles?: StyleProp<TextStyle>;
 };
 
 export const Input = ({
@@ -18,6 +26,7 @@ export const Input = ({
   value,
   placeholder,
   onChangeText,
+  InputStyles,
   ...rest
 }: IProps) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -25,7 +34,7 @@ export const Input = ({
   return (
     <View style={[styles.container, isFocused && styles.containerFocused]}>
       <TextInput
-        style={styles.input}
+        style={[styles.input, InputStyles]}
         onChangeText={onChangeText}
         value={value}
         multiline={true}

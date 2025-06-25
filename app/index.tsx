@@ -6,6 +6,7 @@ import { Nofication } from "@/components/atoms/Nofication";
 import { Typography } from "@/components/atoms/Typography";
 import { LogoStyleSelector } from "@/components/molecules/LogoStyleSelector";
 import { ScreenTemplate } from "@/components/templates/ScreenTemplate";
+import { Colors } from "@/constants/theme";
 import { useRandomPrompt } from "@/hooks/useRandomPrompt";
 import { useAppStore } from "@/store/useAppStore";
 import { getRandomDuration, shouldFail } from "@/utils/generic";
@@ -75,6 +76,11 @@ export default function Home() {
               value={text}
               placeholder="A blue lion logo reading 'HEXA' in bold letters"
               onChangeText={setText}
+              InputStyles={{
+                color:
+                  currentStatus === "idle" ? Colors.white : Colors.placeholder,
+              }}
+              editable={currentStatus === "idle"}
             />
           </View>
           <LogoStyleSelector onSelect={(style) => setSelectedStyle(style)} />
@@ -83,7 +89,9 @@ export default function Home() {
       <Button
         style={[
           styles.createButton,
-          { opacity: disableCreateButton ? 0.3 : 1 },
+          {
+            opacity: disableCreateButton ? 0.3 : 1,
+          },
         ]}
         handlePress={handleCreate}
         disabled={disableCreateButton}
