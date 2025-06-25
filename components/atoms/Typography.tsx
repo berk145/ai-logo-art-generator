@@ -1,3 +1,4 @@
+import { Colors } from "@/constants/theme";
 import { TypographyVariant } from "@/types/Typography";
 import { StyleSheet, Text, TextProps } from "react-native";
 
@@ -27,14 +28,14 @@ const styles = StyleSheet.create({
     fontSize: 22,
     lineHeight: 28,
     fontWeight: "800",
-    color: "white",
+    color: Colors.white,
   },
   h2: {
     fontFamily: "Manrope-ExtraBold",
     fontSize: 20,
     lineHeight: 25,
     fontWeight: "800",
-    color: "white",
+    color: Colors.white,
   },
   h3: {
     fontFamily: "Manrope-ExtraBold",
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     fontWeight: "800",
     //letterSpacing: -1,
-    color: "white",
+    color: Colors.white,
   },
   h4: {
     fontFamily: "Manrope-ExtraBold",
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
     lineHeight: 21,
     fontWeight: "800",
     //letterSpacing: -1,
-    color: "white",
+    color: Colors.white,
   },
   subtitle1: {
     fontFamily: "Manrope-Bold",
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     fontWeight: "700",
     //letterSpacing: -1,
-    color: "white",
+    color: Colors.white,
   },
   body1: {
     fontFamily: "Manrope-Regular",
