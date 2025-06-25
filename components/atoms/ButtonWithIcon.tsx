@@ -24,6 +24,6 @@ const styles = StyleSheet.create({
   buttonContent: {
     flexDirection: "row",
   },
-  emoji: {},
+  emoji: { marginRight: 8 },
   buttonText: { color: "white" },
 });

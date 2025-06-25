@@ -1,8 +1,14 @@
 import ErrorIcon from "@/assets/images/alert-circle.png";
 import { Colors } from "@/constants/theme";
 import { LinearGradient } from "expo-linear-gradient";
-import React from "react";
-import { ActivityIndicator, Image, StyleSheet, View } from "react-native";
+import React, { PropsWithChildren } from "react";
+import {
+  ActivityIndicator,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Typography } from "./Typography";
 
 interface IProps {
@@ -34,12 +40,6 @@ const stateConfig = {
 };
 
 export const Nofication = ({ state }: IProps) => {
-  /*    const renderIcon= state==='loading'?  <ActivityIndicator 
-          size="small" 
-          color="white" 
-          style={styles.loadingIcon}:
-        /> */
-
   const IconSection = () => {
     switch (state) {
       case "loading":
@@ -143,18 +143,41 @@ export const Nofication = ({ state }: IProps) => {
     );
   };
 
+  const Container = ({ children }: PropsWithChildren) => {
+    if (state === "loading") {
+      return (
+        <View
+          style={{
+            ...styles.container,
+            backgroundColor: "#18181B",
+          }}
+        >
+          {children}
+        </View>
+      );
+    }
+
+    return (
+      <TouchableOpacity
+        style={{
+          ...styles.container,
+          backgroundColor: state === "error" ? Colors.white : "#18181B",
+        }}
+        activeOpacity={0.7}
+        onPress={() => {}}
+      >
+        {children}
+      </TouchableOpacity>
+    );
+  };
+
   return (
-    <View
-      style={{
-        ...styles.container,
-        backgroundColor: state === "error" ? Colors.white : "#18181B",
-      }}
-    >
+    <Container>
       <View style={styles.iconSection}>
         <IconSection />
       </View>
       <ContentSection />
-    </View>
+    </Container>
   );
 };
 const styles = StyleSheet.create({
@@ -164,6 +187,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     overflow: "hidden",
     flexDirection: "row",
+    marginBottom: 24,
   },
   iconSection: {
     width: 70,

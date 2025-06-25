@@ -9,7 +9,9 @@ import {
 } from "react-native";
 import { Typography } from "../atoms/Typography";
 
-import Monogram from "@/assets/images/mascot.png";
+import Abstract from "@/assets/images/abstract.png";
+import Mascot from "@/assets/images/mascot.png";
+import Monogram from "@/assets/images/monogram.png";
 import { LogoStyleItem } from "../atoms/LogoStyleItem";
 
 export const LogoStyleSelector = () => {
@@ -73,12 +75,12 @@ const mock: StyleData[] = [
   {
     id: "abstract",
     name: "Abstract",
-    image: MockImage(Monogram),
+    image: MockImage(Abstract),
   },
   {
     id: "mascot",
     name: "Mascot",
-    image: MockImage(Monogram),
+    image: MockImage(Mascot),
   },
 ];
 
