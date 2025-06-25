@@ -5,4 +5,5 @@ export const Colors = {
   placeholder: "#71717A",
   error: "#EF4444",
   dark300: "#D4D4D8",
+  dark400: "#A1A1AA",
 };

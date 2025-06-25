@@ -6,10 +6,19 @@ import { Nofication } from "@/components/atoms/Nofication";
 import { Typography } from "@/components/atoms/Typography";
 import { LogoStyleSelector } from "@/components/molecules/LogoStyleSelector";
 import { ScreenTemplate } from "@/components/templates/ScreenTemplate";
+import { router } from "expo-router";
 import { useState } from "react";
 import { Image, StyleSheet, View } from "react-native";
 
 export default function Home() {
+  const navigateToOutput = () => {
+    router.push("/Output");
+  };
+
+  const handleCreate = () => {
+    navigateToOutput();
+  };
+
   const [text, setText] = useState("");
 
   return (
@@ -40,7 +49,7 @@ export default function Home() {
           <LogoStyleSelector />
         </View>
       </View>
-      <Button style={styles.createButton} handlePress={() => {}}>
+      <Button style={styles.createButton} handlePress={handleCreate}>
         <View style={styles.buttonContentContainer}>
           <Typography text={"Create"} variant="h3" />
           <Image source={Stars} style={styles.buttonImage} />

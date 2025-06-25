@@ -3,6 +3,7 @@ import { Stack } from "expo-router";
 import "react-native-reanimated";
 
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import Toast from "react-native-toast-message";
 
 export default function RootLayout() {
   const [loaded] = useFonts({
@@ -26,6 +27,7 @@ export default function RootLayout() {
         <Stack.Screen name="index" />
         <Stack.Screen name="Output" />
       </Stack>
+      <Toast />
     </SafeAreaProvider>
   );
 }
