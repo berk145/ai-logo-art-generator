@@ -16,7 +16,7 @@ export default function Output() {
     "A professional logo for Harrison & Co. Law Firm, using balanced serif fonts";
 
   const handleCopyPress = () => {
-    Clipboard.setString(promptText);
+    Clipboard.setStringAsync(promptText);
     Toast.show({
       type: "success",
       text1: "Text coppied to clipboard",
